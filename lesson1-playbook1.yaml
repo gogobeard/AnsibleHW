@@ -1,0 +1,26 @@
+---
+    - hosts: all
+      tasks:
+              - name: Install package
+                package:
+                        name: httpd
+                        state: present
+
+              - name: Start service
+                service:
+                        name: httpd
+                        state: started
+
+              - name: Check status
+                shell: sudo systemctl status httpd
+
+              - name: Create file
+                shell: touch /var/www/html/index.html
+                shell: echo “Welcome to my web server” > /var/www/html/index.html
+
+              - name: Firewall settings
+                firewalld:
+                        service: http
+                        state: enabled
+                        permanent: yes
+                        immediate: yes
