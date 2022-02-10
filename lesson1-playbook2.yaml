@@ -1,0 +1,17 @@
+---
+    - hosts: all
+      tasks:
+              - name: Deinstall package
+                package:
+                        name: httpd
+                        state: absent
+
+              - name: Delete file
+                shell: rm /var/www/html/index.html
+
+              - name: Firewall settings
+                firewalld:
+                        service: http
+                        state: disabled
+                        permanent: yes
+                        immediate: yes
