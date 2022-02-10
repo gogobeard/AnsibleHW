@@ -1,0 +1,12 @@
+---
+    - hosts: all
+      tasks:
+              - name: Insert parameter
+                lineinfile:
+                        dest: /etc/default/grub
+                        backrefs: yes
+                        regexp: '^(GRUB_CMDLINE_LINUX=(?!.* ifnames)\"[^\"]+)(\".*)'
+                        line: '\1 net.ifnames = 0 biosdevname = 0\2'
+
+              - name: Write grub configuration file
+                shell: sudo grub2-mkconfig
